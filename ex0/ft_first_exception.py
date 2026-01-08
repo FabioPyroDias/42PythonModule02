@@ -1,5 +1,5 @@
 def check_temperature(temp_str) -> int:
-    """"""
+    """This method expects temperature, handling invalid arguments"""
     try:
         temp = int(temp_str)
         if temp < 0:
@@ -13,6 +13,7 @@ def check_temperature(temp_str) -> int:
 
 
 def test_temperature_input():
+    """Tests different temperatures, including invalid values"""
     print("=== Garden Temperature Checker ===")
     print()
     print("Testing temperature: 25")
