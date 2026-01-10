@@ -10,7 +10,7 @@ class GardenError(Exception):
         if type(self) is PlantError:
             return f"Caught a garden error: The {self.message} "
             "plant is wilting!"
-        if type(self) is GardenError:
+        if type(self) is WaterError:
             return "Not enough water in the tank!"
 
 
