@@ -1,35 +1,37 @@
-class Plant():
-    """Simple Plant class with only name property"""
-    def __init__(self, name: str = None):
-        """Initializer"""
-        self.name = name
+class PlantError(Exception):
+    def __init__(self, message):
+        super().__init__(message)
+        self.message = message
+
+    def __str__(self) -> str:
+        return self.message
 
 
-def water_plants(plant_list):
-    """Waters all plants in the plant_list, raising Exceptions if Plant's
-    name is None"""
+def water_plants(plant_list) -> None:
     print("Opening watering system")
+    index = 0
     try:
-        for plant in plant_list:
-            if plant is None:
-                raise ValueError
-            print(f"Watering {plant.name}")
-    except ValueError:
-        print("Error: Cannot water None - invalid plant!")
+        while index < len(plant_list):
+            if plant_list[index] is None:
+                raise PlantError(f"Error: cannot water "
+                                 f"{plant_list[index]} - invalid plant!")
+            print(f"Watering {plant_list[index]}")
+            index += 1
+    except PlantError as error:
+        print(error)
     finally:
         print("Closing watering system (cleanup)")
-    print("Watering completed successfully!")
 
 
 def test_watering_system():
-    """Tester function"""
-    normal_list = {Plant("tomato"), Plant("lettuce"), Plant("carrots")}
-    error_list = {Plant("tomato"), Plant()}
     print("=== Garden Watering System ===")
     print()
-    water_plants(normal_list)
+    print("Testing normal watering...")
+    water_plants(["tomato", "lettuce", "carrots"])
+    print("Watering completed successfully!")
     print()
-    water_plants(error_list)
+    print("Testing with error...")
+    water_plants(["tomato", None, "carrots"])
     print()
     print("Cleanup always happens, even with errors!")
 

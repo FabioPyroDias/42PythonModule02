@@ -1,60 +1,49 @@
-def garden_operations(error: int) -> None:
-    """Raises ValueError, ZeroDivisionError, FileNotFoundError and KeyError"""
-    if error == 0:
-        print("Testing ValueError...")
+def garden_operations(option: int) -> None:
+    if option == 0:
         try:
-            tmp = int('abc')
+            int("abc")
         except ValueError:
-            print("Caught ValueError: invalid literal for int()")
-    elif error == 1:
-        print("Testing ZeroDivisionError...")
+            return "Caught ValueError: invalid literal for int()"
+    elif option == 1:
         try:
-            tmp = 1 / 0
+            test = 1 / 0
         except ZeroDivisionError:
-            print("Caught ZeroDivisionError: division by zero")
-    elif error == 2:
-        print("Testing FileNotFoundError...")
+            return "Caught ZeroDivisionError: division by zero"
+    elif option == 2:
         try:
-            with open("missing.txt", "r") as file:
-                content = file.read()
-                print(content)
+            open("missing.txt")
         except FileNotFoundError:
-            print("Caught FileNotFoundError: No such file 'missing.txt'")
-    elif error == 3:
-        print("Testing KeyError...")
+            return "Caught FileNotFoundError: No such file 'missing.txt'"
+    elif option == 3:
         try:
-            dictionary = {}
-            print(dictionary[r'missing\_plant'])
+            test = {}
+            test["missing\\_plant"]
         except KeyError:
-            print(r"Caught KeyError: 'missing\_plant'")
+            return "Caught KeyError: 'missing\\_plant'"
     else:
-        print("Testing multiple errors together...")
         try:
-            tmp = int('abc')
-            tmp = 1 / 0
-            print(tmp)
-            with open("missing.txt", "r") as file:
-                content = file.read()
-                print(content)
-            dictionary = {}
-            print(dictionary[r'missing\_plant'])
+            int("abc")
         except (ValueError, ZeroDivisionError, FileNotFoundError, KeyError):
-            print("Caught an error, but program continues!")
+            return "Caught an error, but program continues!"
 
 
-def test_error_types() -> None:
-    """Raises individual Errors"""
+def test_error_types():
     print("=== Garden Error Types Demo ===")
     print()
-    garden_operations(0)
+    print("Testing ValueError...")
+    print(garden_operations(0))
     print()
-    garden_operations(1)
+    print("Testing ZeroDivisionError...")
+    print(garden_operations(1))
     print()
-    garden_operations(2)
+    print("Testing FileNotFoundError...")
+    print(garden_operations(2))
     print()
-    garden_operations(3)
+    print("Testing KeyError..")
+    print(garden_operations(3))
     print()
-    garden_operations(4)
+    print("Testing multiple errors together...")
+    print(garden_operations(4))
     print()
     print("All error types tested successfully!")
 

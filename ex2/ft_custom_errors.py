@@ -1,97 +1,67 @@
 class GardenError(Exception):
-    """Custom Exception raised for Garden Problems"""
-    def __init__(self, message: str = "") -> None:
-        """"""
+    def __init__(self, message: str) -> None:
+        super().__init__(message)
         self.message = message
-        super().__init__(self.message)
 
     def __str__(self) -> str:
-        """Returns the specific error raised"""
-        if type(self) is PlantError:
-            return f"Caught a garden error: The {self.message} "
-            "plant is wilting!"
-        if type(self) is WaterError:
-            return "Not enough water in the tank!"
+        return f"Caught a garden error: {self.message}"
 
 
 class PlantError(GardenError):
-    """Custom Exception raised for Plant Problems"""
-    def __init__(self, message) -> None:
+    def __init__(self, message: str) -> None:
         super().__init__(message)
 
     def __str__(self) -> str:
-        """Returns PlantError message"""
-        return f"The {self.message} plant is wilting!"
+        return f"Caught PlantError: {self.message}"
 
 
 class WaterError(GardenError):
-    """Custom Exception raised for Water Problems"""
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, message: str) -> None:
+        super().__init__(message)
 
-    def __str__(self) -> str:
-        """Returns WaterError message"""
-        return "Not enough water in the tank!"
+    def __str__(self):
+        return f"Caught WaterError: {self.message}"
 
 
-def test_plant_error(plant: str = "tomato", is_wilting: bool = True) -> None:
-    """Method where PlantError is raised"""
-    if is_wilting:
-        raise PlantError(plant)
-
-
-def test_water_error(irrigation: int = 10, water_tank: int = 9) -> None:
-    """Method where WaterError is raised"""
-    if irrigation > water_tank:
-        raise WaterError()
-    water_tank -= irrigation
-
-
-def handle_plant_error() -> None:
-    """Method where PlantError Exception is caught"""
+def test_plant_error():
     try:
-        test_plant_error()
+        raise PlantError("The tomato plant is wilting!")
     except PlantError as error:
-        print(f"Caught PlantError: {error}")
+        print(error)
 
 
-def handle_water_error() -> None:
-    """Method where WaterError Exception is caught"""
+def test_water_error():
     try:
-        test_water_error()
+        raise WaterError("Not enough water in the tank!")
     except WaterError as error:
-        print(f"Caught WaterError: {error}")
+        print(error)
 
 
-def handle_garden_error(is_wilting: bool, water_tank: int) -> None:
-    """Method where PlantError and WaterError Exceptions are caught
-    They're dealt as GardenErrors"""
+def test_garden_error():
     try:
-        test_plant_error("tomato", is_wilting)
+        raise GardenError("The tomato plant is wilting!")
     except GardenError as error:
-        print(f"Caught a garden error: {error}")
+        print(error)
     try:
-        test_water_error(10, water_tank)
+        raise GardenError("Not enough water in the tank!")
     except GardenError as error:
-        print(f"Caught a garden error: {error}")
+        print(error)
 
 
-def test_error_types() -> None:
-    """Testing Errors method"""
+def test_errors():
     print("=== Custom Garden Errors Demo ===")
     print()
     print("Testing PlantError...")
-    handle_plant_error()
+    test_plant_error()
     print()
     print("Testing WaterError...")
-    handle_water_error()
+    test_water_error()
     print()
     print("Testing catching all garden errors...")
-    handle_garden_error(True, 10)
-    handle_garden_error(False, 9)
+    test_garden_error()
     print()
     print("All custom error types work correctly!")
 
 
 if __name__ == "__main__":
-    test_error_types()
+    test_errors()
